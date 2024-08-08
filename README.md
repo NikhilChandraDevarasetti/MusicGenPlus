@@ -34,32 +34,17 @@ You can use .wav files longer than 30 seconds, in that case the model will be tr
 
 In this example, segment_000.txt contains the caption "jazz music, jobim" for wav file segment_000.wav.
 
-Running the trainer
-Run python3 run.py --dataset <PATH_TO_YOUR_DATASET>. Make sure to use the full path to the dataset, not a relative path.
-
-Options
-dataset_path: String, path to your dataset with .wav and .txt pairs.
-model_id: String, MusicGen model to use. Can be small/medium/large. Default: small
-lr: Float, learning rate. Default: 0.00001/1e-5
-epochs: Integer, epoch count. Default: 100
-use_wandb: Integer, 1 to enable wandb, 0 to disable it. Default: 0 = Disabled
-save_step: Integer, amount of steps to save a checkpoint. Default: None
-no_label: Integer, whether to read a dataset without .txt files. Default: 0 = Disabled
-tune_text: Integer, perform textual inversion instead of full training. Default: 0 = Disabled
-weight_decay: Float, the weight decay regularization coefficient. Default: 0.00001/1e-5
-grad_acc: Integer, number of steps to smooth gradients over. Default: 2
-warmup_steps: Integer, amount of steps to slowly increase learning rate over to let the optimizer compute statistics. Default: 16
-batch_size: Integer, batch size the model sees at once. Reduce to lower memory consumption. Default: 4
-use_cfg: Integer, whether to train with some labels randomly dropped out. Default: 0 = Disabled
-You can set these options like this: python3 run.py --use_wandb=1
+## Running the trainer
+Run ```bash
+python3 run.py --dataset <PATH_TO_YOUR_DATASET>
+```
+Make sure to use the full path to the dataset, not a relative path.
 
 Once training finishes, the model (and checkpoints) will be available under the models folder in the same path you ran the trainer on.
 
-
-
 To load them, simply run the following on your generation script:
-
-model.lm.load_state_dict(torch.load('models/lm_final.pt'))
+```bash
+model.lm.load_state_dict(torch.load('models/lm_final.pt'))```
 Where model is the MusicGen Object and models/lm_final.pt is the path to your model (or checkpoint).
 
 
