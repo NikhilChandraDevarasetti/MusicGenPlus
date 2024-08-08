@@ -35,7 +35,8 @@ You can use .wav files longer than 30 seconds, in that case the model will be tr
 In this example, segment_000.txt contains the caption "jazz music, jobim" for wav file segment_000.wav.
 
 ## Running the trainer
-Run ```bash
+Run 
+```bash
 python3 run.py --dataset <PATH_TO_YOUR_DATASET>
 ```
 Make sure to use the full path to the dataset, not a relative path.
@@ -43,8 +44,10 @@ Make sure to use the full path to the dataset, not a relative path.
 Once training finishes, the model (and checkpoints) will be available under the models folder in the same path you ran the trainer on.
 
 To load them, simply run the following on your generation script:
+
 ```bash
-model.lm.load_state_dict(torch.load('models/lm_final.pt'))```
+model.lm.load_state_dict(torch.load('models/lm_final.pt'))
+```
 Where model is the MusicGen Object and models/lm_final.pt is the path to your model (or checkpoint).
 
 
