@@ -3,8 +3,9 @@ MusicGenPlus is an improved version of MusicGen small model. The Final CLAP scor
 
 
 ## Installation
+```bash
 pip install -r new_requirements.txt
-
+```
 It is also recommended having `ffmpeg` installed, either through your system or Anaconda:
 ```bash
 sudo apt-get install ffmpeg
