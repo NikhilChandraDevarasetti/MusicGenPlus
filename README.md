@@ -13,7 +13,9 @@ conda install "ffmpeg<5" -c conda-forge
 ```
 ## Dataset
 Musicbench Training Data: https://drive.google.com/drive/folders/1-fFYHhvlcshWSWg3I271mXq26VcQR7Qm?usp=sharing
+
 Musiccaps Test Data: https://drive.google.com/drive/folders/1Eu7uGptiU1xm3_9iinfBJfCd4LEjLS50?usp=sharing
+
 Generated Audios: 
 ## Models
 
@@ -22,6 +24,7 @@ MusicGenPlus required model weights: https://drive.google.com/drive/folders/1HZd
 ## Training
 
 Create a folder, in it, place your audio and caption files. They must be .wav and .txt format respectively. You can omit .txt files for training with empty text by setting the --no_label option to 1.
+
 ![68747470733a2f2f692e696d6775722e636f6d2f416c446c7142492e706e67](https://github.com/user-attachments/assets/25af6592-83c6-440d-a6cb-d758229bea84)
 
 
