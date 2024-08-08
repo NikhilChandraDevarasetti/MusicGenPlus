@@ -1,89 +1,63 @@
-# AudioCraft
-![docs badge](https://github.com/facebookresearch/audiocraft/workflows/audiocraft_docs/badge.svg)
-![linter badge](https://github.com/facebookresearch/audiocraft/workflows/audiocraft_linter/badge.svg)
-![tests badge](https://github.com/facebookresearch/audiocraft/workflows/audiocraft_tests/badge.svg)
-
-AudioCraft is a PyTorch library for deep learning research on audio generation. AudioCraft contains inference and training code
-for two state-of-the-art AI generative models producing high-quality audio: AudioGen and MusicGen.
+# MusicGenPlus
+MusicGenPlus is an improved version of MusicGen small model. The Final CLAP score on MusicCaps Data surpassed small, medium and large models of MusicGen.
 
 
 ## Installation
-AudioCraft requires Python 3.9, PyTorch 2.1.0. To install AudioCraft, you can run the following:
+pip install -r new_requirements.txt
 
-```shell
-# Best to make sure you have torch installed first, in particular before installing xformers.
-# Don't run this if you already have PyTorch installed.
-python -m pip install 'torch==2.1.0'
-# You might need the following before trying to install the packages
-python -m pip install setuptools wheel
-# Then proceed to one of the following
-python -m pip install -U audiocraft  # stable release
-python -m pip install -U git+https://git@github.com/facebookresearch/audiocraft#egg=audiocraft  # bleeding edge
-python -m pip install -e .  # or if you cloned the repo locally (mandatory if you want to train).
-python -m pip install -e '.[wm]'  # if you want to train a watermarking model
-```
-
-We also recommend having `ffmpeg` installed, either through your system or Anaconda:
+It is also recommended having `ffmpeg` installed, either through your system or Anaconda:
 ```bash
 sudo apt-get install ffmpeg
 # Or if you are using Anaconda or Miniconda
 conda install "ffmpeg<5" -c conda-forge
 ```
-
+## Dataset
+Musicbench Training Data: https://drive.google.com/drive/folders/1-fFYHhvlcshWSWg3I271mXq26VcQR7Qm?usp=sharing
+Musiccaps Test Data: https://drive.google.com/drive/folders/1Eu7uGptiU1xm3_9iinfBJfCd4LEjLS50?usp=sharing
+Generated Audios: 
 ## Models
 
-At the moment, AudioCraft contains the training code and inference code for:
-* [MusicGen](./docs/MUSICGEN.md): A state-of-the-art controllable text-to-music model.
-* [AudioGen](./docs/AUDIOGEN.md): A state-of-the-art text-to-sound model.
-* [EnCodec](./docs/ENCODEC.md): A state-of-the-art high fidelity neural audio codec.
-* [Multi Band Diffusion](./docs/MBD.md): An EnCodec compatible decoder using diffusion.
-* [MAGNeT](./docs/MAGNET.md): A state-of-the-art non-autoregressive model for text-to-music and text-to-sound.
-* [AudioSeal](./docs/WATERMARKING.md): A state-of-the-art audio watermarking.
+MusicGenPlus required model weights: https://drive.google.com/drive/folders/1HZdHtFryZbPVHVGcgVnulKQUHFlVoZYA?usp=sharing
 
-## Training code
+## Training
 
-AudioCraft contains PyTorch components for deep learning research in audio and training pipelines for the developed models.
-For a general introduction of AudioCraft design principles and instructions to develop your own training pipeline, refer to
-the [AudioCraft training documentation](./docs/TRAINING.md).
-
-For reproducing existing work and using the developed training pipelines, refer to the instructions for each specific model
-that provides pointers to configuration, example grids and model/task-specific information and FAQ.
+Create a folder, in it, place your audio and caption files. They must be .wav and .txt format respectively. You can omit .txt files for training with empty text by setting the --no_label option to 1.
+![68747470733a2f2f692e696d6775722e636f6d2f416c446c7142492e706e67](https://github.com/user-attachments/assets/25af6592-83c6-440d-a6cb-d758229bea84)
 
 
-## API documentation
 
-We provide some [API documentation](https://facebookresearch.github.io/audiocraft/api_docs/audiocraft/index.html) for AudioCraft.
+You can use .wav files longer than 30 seconds, in that case the model will be trained on random crops of the original .wav file.
+
+In this example, segment_000.txt contains the caption "jazz music, jobim" for wav file segment_000.wav.
+
+Running the trainer
+Run python3 run.py --dataset <PATH_TO_YOUR_DATASET>. Make sure to use the full path to the dataset, not a relative path.
+
+Options
+dataset_path: String, path to your dataset with .wav and .txt pairs.
+model_id: String, MusicGen model to use. Can be small/medium/large. Default: small
+lr: Float, learning rate. Default: 0.00001/1e-5
+epochs: Integer, epoch count. Default: 100
+use_wandb: Integer, 1 to enable wandb, 0 to disable it. Default: 0 = Disabled
+save_step: Integer, amount of steps to save a checkpoint. Default: None
+no_label: Integer, whether to read a dataset without .txt files. Default: 0 = Disabled
+tune_text: Integer, perform textual inversion instead of full training. Default: 0 = Disabled
+weight_decay: Float, the weight decay regularization coefficient. Default: 0.00001/1e-5
+grad_acc: Integer, number of steps to smooth gradients over. Default: 2
+warmup_steps: Integer, amount of steps to slowly increase learning rate over to let the optimizer compute statistics. Default: 16
+batch_size: Integer, batch size the model sees at once. Reduce to lower memory consumption. Default: 4
+use_cfg: Integer, whether to train with some labels randomly dropped out. Default: 0 = Disabled
+You can set these options like this: python3 run.py --use_wandb=1
+
+Once training finishes, the model (and checkpoints) will be available under the models folder in the same path you ran the trainer on.
 
 
-## FAQ
 
-#### Is the training code available?
+To load them, simply run the following on your generation script:
 
-Yes! We provide the training code for [EnCodec](./docs/ENCODEC.md), [MusicGen](./docs/MUSICGEN.md) and [Multi Band Diffusion](./docs/MBD.md).
-
-#### Where are the models stored?
-
-Hugging Face stored the model in a specific location, which can be overridden by setting the `AUDIOCRAFT_CACHE_DIR` environment variable for the AudioCraft models.
-In order to change the cache location of the other Hugging Face models, please check out the [Hugging Face Transformers documentation for the cache setup](https://huggingface.co/docs/transformers/installation#cache-setup).
-Finally, if you use a model that relies on Demucs (e.g. `musicgen-melody`) and want to change the download location for Demucs, refer to the [Torch Hub documentation](https://pytorch.org/docs/stable/hub.html#where-are-my-downloaded-models-saved).
+model.lm.load_state_dict(torch.load('models/lm_final.pt'))
+Where model is the MusicGen Object and models/lm_final.pt is the path to your model (or checkpoint).
 
 
-## License
-* The code in this repository is released under the MIT license as found in the [LICENSE file](LICENSE).
-* The models weights in this repository are released under the CC-BY-NC 4.0 license as found in the [LICENSE_weights file](LICENSE_weights).
 
 
-## Citation
-
-For the general framework of AudioCraft, please cite the following.
-```
-@inproceedings{copet2023simple,
-    title={Simple and Controllable Music Generation},
-    author={Jade Copet and Felix Kreuk and Itai Gat and Tal Remez and David Kant and Gabriel Synnaeve and Yossi Adi and Alexandre Défossez},
-    booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
-    year={2023},
-}
-```
-
-When referring to a specific model, please cite as mentioned in the model specific README, e.g
-[./docs/MUSICGEN.md](./docs/MUSICGEN.md), [./docs/AUDIOGEN.md](./docs/AUDIOGEN.md), etc.
