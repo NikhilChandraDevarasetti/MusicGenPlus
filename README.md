@@ -17,7 +17,7 @@ Musicbench Training Data: https://drive.google.com/drive/folders/1-fFYHhvlcshWSW
 
 Musiccaps Test Data: https://drive.google.com/drive/folders/1Eu7uGptiU1xm3_9iinfBJfCd4LEjLS50?usp=sharing
 
-Generated Audios: 
+Generated Audios: https://drive.google.com/drive/folders/1nk7398-taEppTkHaDgefRMXuRazgndlV?usp=sharing
 ## Models
 
 MusicGenPlus required model weights: https://drive.google.com/drive/folders/1HZdHtFryZbPVHVGcgVnulKQUHFlVoZYA?usp=sharing
