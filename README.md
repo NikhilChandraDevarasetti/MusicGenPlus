@@ -17,7 +17,6 @@ Musicbench Training Data: https://drive.google.com/drive/folders/1-fFYHhvlcshWSW
 
 Musiccaps Test Data: https://drive.google.com/drive/folders/1Eu7uGptiU1xm3_9iinfBJfCd4LEjLS50?usp=sharing
 
-Generated Audios: https://drive.google.com/drive/folders/1nk7398-taEppTkHaDgefRMXuRazgndlV?usp=sharing
 
 ## Models
 
@@ -50,6 +49,9 @@ To load them, simply run the following on your generation script:
 model.lm.load_state_dict(torch.load('models/lm_final.pt'))
 ```
 Where model is the MusicGen Object and models/lm_final.pt is the path to your model (or checkpoint).
+
+## Results
+Generated Audios: https://drive.google.com/drive/folders/1nk7398-taEppTkHaDgefRMXuRazgndlV?usp=sharing
 
 
 
