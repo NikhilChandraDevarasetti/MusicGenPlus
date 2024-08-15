@@ -51,7 +51,7 @@ model.lm.load_state_dict(torch.load('models/lm_final.pt'))
 Where model is the MusicGen Object and models/lm_final.pt is the path to your model (or checkpoint).
 
 ## Results
-Generated Audios: https://drive.google.com/drive/folders/1nk7398-taEppTkHaDgefRMXuRazgndlV?usp=sharing
+Generated Audios: https://drive.google.com/drive/folders/1FO1ZagyhophLGPZ5rsxxBHyUdjk3YeIw?usp=sharing
 
 
 
